@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="data-structures-BT-BST-heaps" />
+        <module name="Heaps-BST-Exercises" />
+        <module name="Heaps BST" />
+        <module name="BST heaps" />
+        <module name="BT BST heaps" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

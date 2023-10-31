@@ -38,5 +38,33 @@ public class MaxHeapTest  {
         assertEquals(8, this.maxHeap.size());
     }
 
+//    15, 25, 6, 9, 5, 8, 17, 16
+
+//       25
+//    16   17
+//  15  5   6   8
+// 9
+//    25, 16, 17, 15, 5, 6, 8
+//       9
+//    16      8
+//  15  5   6
+//
+    @Test
+    public void testPoll(){
+        Integer poll = maxHeap.poll();
+        assertEquals(Integer.valueOf(25), poll);
+        assertEquals(7, maxHeap.size());
+        assertEquals( Integer.valueOf(17),maxHeap.peek());
+        maxHeap.poll();
+        assertEquals( Integer.valueOf(16),maxHeap.peek());
+        maxHeap.poll();
+        assertEquals( Integer.valueOf(15),maxHeap.peek());
+        maxHeap.poll();
+        assertEquals( Integer.valueOf(9),maxHeap.peek());
+
+
+
+    }
+
 
 }
