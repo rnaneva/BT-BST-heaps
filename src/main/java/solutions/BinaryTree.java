@@ -53,26 +53,7 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
     }
 
 
-    public List<E> topView() {
-        return getOuterElements(new ArrayList<>(), this);
 
-    }
-
-    private List<E>  getOuterElements(List<E> elements, BinaryTree<E> tree) {
-
-        while(tree.leftChild != null){
-            elements.add(tree.getKey());
-            tree = tree.leftChild;
-        }
-        elements.add(tree.getKey());
-        tree = this;
-        while(tree.rightChild != null){
-            tree = tree.rightChild;
-            elements.add(tree.getKey());
-        }
-
-        return elements;
-    }
 
     public BinaryTree<E> getParent() {
         return this.parent;
@@ -111,6 +92,55 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         return indentPreorder(0, new StringBuilder());
     }
 
+    @Override
+    public List<AbstractBinaryTree<E>> preOrder() {
+        return getListPreOrder(new ArrayList<>());
+
+    }
+
+    @Override
+    public List<AbstractBinaryTree<E>> postOrder() {
+        return getListPostOrder(new ArrayList<>());
+    }
+
+    @Override
+    public List<AbstractBinaryTree<E>> inOrder() {
+        return getListInOrder(new ArrayList<>());
+    }
+
+    @Override
+    public void forEachInOrder(Consumer<E> consumer) {
+        if (this.leftChild != null) {
+            this.getLeft().forEachInOrder(consumer);
+        }
+        consumer.accept(this.value);
+        if (this.getRight() != null) {
+            this.getRight().forEachInOrder(consumer);
+        }
+
+    }
+
+    public Set<BinaryTree<E>> dfs(BinaryTree<E> tree, LinkedHashSet<BinaryTree<E>> trees) {
+        trees.add(tree);
+        if (tree.leftChild != null) {
+            dfs(tree.leftChild, trees);
+        }
+        if (tree.rightChild != null) {
+            dfs(tree.rightChild, trees);
+        }
+        return trees;
+    }
+
+    public BinaryTree<E> getTreeByValue(E element) {
+        Set<BinaryTree<E>> treesSet = dfs(this, new LinkedHashSet<>());
+        for (BinaryTree<E> tree : treesSet) {
+            if (tree.getKey().equals(element)) {
+                return tree;
+            }
+        }
+        return null;
+    }
+
     private String indentPreorder(int indent, StringBuilder sb) {
         sb.append(" ".repeat(indent))
                 .append(this.value)
@@ -126,11 +156,28 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
 
     }
 
-    @Override
-    public List<AbstractBinaryTree<E>> preOrder() {
-        return getListPreOrder(new ArrayList<>());
+    public List<E> topView() {
+        return getOuterElements(new ArrayList<>(), this);
 
     }
+
+    private List<E>  getOuterElements(List<E> elements, BinaryTree<E> tree) {
+
+        while(tree.leftChild != null){
+            elements.add(tree.getKey());
+            tree = tree.leftChild;
+        }
+        elements.add(tree.getKey());
+        tree = this;
+        while(tree.rightChild != null){
+            tree = tree.rightChild;
+            elements.add(tree.getKey());
+        }
+
+        return elements;
+    }
+
+
 
     private List<AbstractBinaryTree<E>> getListPreOrder(ArrayList<AbstractBinaryTree<E>> list) {
 
@@ -145,10 +192,7 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         return list;
     }
 
-    @Override
-    public List<AbstractBinaryTree<E>> inOrder() {
-        return getListInOrder(new ArrayList<>());
-    }
+
 
     private List<AbstractBinaryTree<E>> getListInOrder(ArrayList<AbstractBinaryTree<E>> list) {
         if (this.leftChild != null) {
@@ -162,10 +206,7 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         return list;
     }
 
-    @Override
-    public List<AbstractBinaryTree<E>> postOrder() {
-        return getListPostOrder(new ArrayList<>());
-    }
+
 
     private List<AbstractBinaryTree<E>> getListPostOrder(ArrayList<AbstractBinaryTree<E>> list) {
 
@@ -179,38 +220,11 @@ public class BinaryTree<E> implements AbstractBinaryTree<E> {
         return list;
     }
 
-    @Override
-    public void forEachInOrder(Consumer<E> consumer) {
-        if (this.leftChild != null) {
-            this.getLeft().forEachInOrder(consumer);
-        }
-        consumer.accept(this.value);
-        if (this.getRight() != null) {
-            this.getRight().forEachInOrder(consumer);
-        }
 
-    }
 
-    public BinaryTree<E> getTreeByValue(E element) {
-        Set<BinaryTree<E>> treesSet = dfs(this, new LinkedHashSet<>());
-        for (BinaryTree<E> tree : treesSet) {
-            if (tree.getKey().equals(element)) {
-                return tree;
-            }
-        }
-        return null;
-    }
 
-    public Set<BinaryTree<E>> dfs(BinaryTree<E> tree, LinkedHashSet<BinaryTree<E>> trees) {
-        trees.add(tree);
-        if (tree.leftChild != null) {
-            dfs(tree.leftChild, trees);
-        }
-        if (tree.rightChild != null) {
-            dfs(tree.rightChild, trees);
-        }
-        return trees;
-    }
+
+
 
 
 }

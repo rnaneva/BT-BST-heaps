@@ -7,55 +7,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
+public class MinHeap<E extends Comparable<E> >{
     private List<E> elements;
 
     public MinHeap() {
         this.elements = new ArrayList<>();
     }
 
-    @Override
+
     public int size() {
         return this.elements.size();
     }
 
-    @Override
+
     public void add(E element) {
         elements.add(element);
         heapifyUp(this.size() - 1);
     }
 
-    private int getParentIndex(int childIndex) {
-        return (childIndex - 1) / 2;
-    }
 
-    private boolean indexIsValid(int index) {
-        return index >= 0 && index < this.size();
-    }
 
-    private void heapifyUp(int index) {
-
-        while (hasParent(index) && isGreater(getParentIndex(index), index)) {
-
-            Collections.swap(this.elements, getParentIndex(index), index);
-            index = getParentIndex(index);
-        }
-    }
-
-    private boolean isGreater(int parentIndex, int childIndex) {
-        E parent = this.elements.get(parentIndex);
-        E child = this.elements.get(childIndex);
-
-        return parent.compareTo(child) > 0;
-
-    }
-
-    private boolean hasParent(int index) {
-        int parentIndex = getParentIndex(index);
-        return indexIsValid(parentIndex);
-    }
-
-    @Override
     public E peek() {
         if (this.size() == 0) {
             throw new NullPointerException();
@@ -63,7 +34,7 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
         return this.elements.get(0);
     }
 
-    @Override
+
     public E poll() {
 
         E elementToRemove = peek();
@@ -73,6 +44,17 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
 
         return elementToRemove;
     }
+
+
+    public void decrease(E element) {
+        E removed = removeElement(element);
+
+
+// set new lower generic value todo
+        add(removed);
+
+    }
+
 
     private void heapifyDown(int index) {
 
@@ -117,16 +99,8 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
         return parentIndex * 2 + 2;
     }
 
-    @Override
-    public void decrease(E element) {
-        E removed = removeElement(element);
 
-// set new lower generic value todo
-        add(removed);
-
-    }
-
-    public E removeElement(E element) {
+    private E removeElement(E element) {
 
         int index = elements.indexOf(element);
 
@@ -135,6 +109,36 @@ public class MinHeap<E extends Comparable<E> & Decrease<E>> implements Heap<E> {
         heapifyDown(index);
 
         return element;
+    }
+
+    private int getParentIndex(int childIndex) {
+        return (childIndex - 1) / 2;
+    }
+
+    private boolean indexIsValid(int index) {
+        return index >= 0 && index < this.size();
+    }
+
+    private void heapifyUp(int index) {
+
+        while (hasParent(index) && isGreater(getParentIndex(index), index)) {
+
+            Collections.swap(this.elements, getParentIndex(index), index);
+            index = getParentIndex(index);
+        }
+    }
+
+    private boolean isGreater(int parentIndex, int childIndex) {
+        E parent = this.elements.get(parentIndex);
+        E child = this.elements.get(childIndex);
+
+        return parent.compareTo(child) > 0;
+
+    }
+
+    private boolean hasParent(int index) {
+        int parentIndex = getParentIndex(index);
+        return indexIsValid(parentIndex);
     }
 
 

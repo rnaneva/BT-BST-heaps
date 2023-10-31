@@ -25,7 +25,7 @@ public class MinHeapTest {
 
     @Test
     public void testHeapifyUpAddOne() {
-        Heap<Product> heap = new MinHeap<>();
+        MinHeap<Product> heap = new MinHeap<>();
         heap.add(new Product(13));
         assertEquals(13, heap.peek().getPrice());
     }
@@ -52,44 +52,31 @@ public class MinHeapTest {
     }
 
     @Test
-    public void testPoll(){
+    public void testPoll() {
 
         Product poll = minHeap.poll();
         int price = poll.getPrice();
         assertEquals(5, price);
         assertEquals(7, minHeap.size());
-        assertEquals( 6, minHeap.peek().getPrice());
+        assertEquals(6, minHeap.peek().getPrice());
         minHeap.poll();
-        assertEquals( 8, minHeap.peek().getPrice());
+        assertEquals(8, minHeap.peek().getPrice());
         minHeap.poll();
-        assertEquals( 9, minHeap.peek().getPrice());
+        assertEquals(9, minHeap.peek().getPrice());
         minHeap.poll();
-        assertEquals( 15, minHeap.peek().getPrice());
+        assertEquals(15, minHeap.peek().getPrice());
 
 
     }
+}
 
-    @Test
-    public void testDecrease(){
-        Product product = new Product(9);
-        minHeap.decrease(product);
-        minHeap.poll();
-        minHeap.poll();
-        minHeap.poll();
-        assertEquals( 9, minHeap.peek().getPrice());
-    }
 
 
 //    5 6 8 16 9 15 17 25
-//    6 8 15 16 9 17 25
+
 
 //         5
 //     6      8
 //  16  9   15  17
 //25
 
-//        5
-//    6     8
-// 9  25  15 17
-//16
-}

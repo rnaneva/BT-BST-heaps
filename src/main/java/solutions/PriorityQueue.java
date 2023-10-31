@@ -25,34 +25,6 @@ public class PriorityQueue<E extends Comparable<E>> implements AbstractQueue<E> 
         heapifyUp(this.size() - 1);
     }
 
-    private void heapifyUp(int index) {
-        while (hasParent(index) && isLess(getParent(index), elements.get(index))) {
-            int parentIndex = getParentIndex(index);
-            Collections.swap(this.elements, index, parentIndex);
-            index = parentIndex;
-        }
-    }
-
-    private boolean isLess(E parent, E element) {
-        return parent.compareTo(element) < 0;
-    }
-
-    private boolean hasParent(int index) {
-        E parent = getParent(index);
-        return parent != null;
-    }
-
-    private E getParent (int index){
-        int parentIndex = getParentIndex(index);
-        return this.elements.get(parentIndex);
-    }
-
-    private int getParentIndex(int childIndex) {
-        int parentIndex = (childIndex - 1) / 2;
-        validateIndex(parentIndex);
-        return parentIndex;
-    }
-
 
     @Override
     public E peek() {
@@ -98,6 +70,14 @@ public class PriorityQueue<E extends Comparable<E>> implements AbstractQueue<E> 
         }
     }
 
+    private void heapifyUp(int index) {
+        while (hasParent(index) && isLess(getParent(index), elements.get(index))) {
+            int parentIndex = getParentIndex(index);
+            Collections.swap(this.elements, index, parentIndex);
+            index = parentIndex;
+        }
+    }
+
     private boolean less(int childIndex1, int childIndex2) {
         return this.elements.get(childIndex1).compareTo(this.elements.get(childIndex2)) < 0;
     }
@@ -114,4 +94,26 @@ public class PriorityQueue<E extends Comparable<E>> implements AbstractQueue<E> 
             throw new IndexOutOfBoundsException();
         }
     }
+
+    private boolean isLess(E parent, E element) {
+        return parent.compareTo(element) < 0;
+    }
+
+    private boolean hasParent(int index) {
+        E parent = getParent(index);
+        return parent != null;
+    }
+
+    private E getParent (int index){
+        int parentIndex = getParentIndex(index);
+        return this.elements.get(parentIndex);
+    }
+
+    private int getParentIndex(int childIndex) {
+        int parentIndex = (childIndex - 1) / 2;
+        validateIndex(parentIndex);
+        return parentIndex;
+    }
+
+
 }
